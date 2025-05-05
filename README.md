@@ -1,6 +1,6 @@
 # 🧮 Calculadora Matemática Avançada
 
-![Preview da Calculadora](calculadora.png) 
+![Preview da Calculadora](calculadora.PNG) 
 
 Uma aplicação web interativa que realiza diversos cálculos matemáticos, desde operações básicas até fórmulas complexas como Bhaskara. Desenvolvida como exercício prático para consolidar conhecimentos em **HTML, CSS e JavaScript**.
 
