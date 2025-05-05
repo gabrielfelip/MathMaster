@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Integrado de Cálculos Matemáticos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .section h2 {
+        margin-top: 0;
+        color: #444;
+      }
+      input[type="number"] {
+        padding: 8px;
+        width: 100px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        min-height: 20px;
+      }
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .flex-item {
+        flex: 1;
+        min-width: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sistema Integrado de Cálculos Matemáticos</h1>
+
+      <div class="flex-container">
+        <div class="flex-item">
+          <div class="section">
+            <h2>Operações Básicas</h2>
+            <div>
+              <label for="num1">Número 1:</label>
+              <input type="number" id="num1" step="any" />
+            </div>
+            <div>
+              <label for="num2">Número 2:</label>
+              <input type="number" id="num2" step="any" />
+            </div>
+            <button onclick="operacoesBasicas()">Calcular Operações</button>
+            <div class="result" id="resultBasico"></div>
+          </div>
+
+          <div class="section">
+            <h2>Múltiplos</h2>
+            <div>
+              <label for="numMultiplo">Número:</label>
+              <input type="number" id="numMultiplo" step="any" />
+            </div>
+            <button onclick="calcularMultiplos()">Calcular Múltiplos</button>
+            <div class="result" id="resultMultiplos"></div>
+          </div>
+
+          <div class="section">
+            <h2>Potências</h2>
+            <div>
+              <label for="numPotencia">Número:</label>
+              <input type="number" id="numPotencia" step="any" />
+            </div>
+            <button onclick="calcularPotencias()">Calcular Potências</button>
+            <div class="result" id="resultPotencias"></div>
+          </div>
+
+          <div class="section">
+            <h2>Raiz Quadrada</h2>
+            <div>
+              <label for="numRaiz">Número:</label>
+              <input type="number" id="numRaiz" step="any" min="0" />
+            </div>
+            <button onclick="calcularRaiz()">Calcular Raiz</button>
+            <div class="result" id="resultRaiz"></div>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="section">
+            <h2>Bhaskara</h2>
+            <div>
+              <label for="a">Coeficiente a:</label>
+              <input type="number" id="a" step="any" />
+            </div>
+            <div>
+              <label for="b">Coeficiente b:</label>
+              <input type="number" id="b" step="any" />
+            </div>
+            <div>
+              <label for="c">Coeficiente c:</label>
+              <input type="number" id="c" step="any" />
+            </div>
+            <button onclick="calcularBhaskara()">Calcular Bhaskara</button>
+            <div class="result" id="resultBhaskara"></div>
+          </div>
+
+          <div class="section">
+            <h2>Média Aritmética</h2>
+            <div>
+              <label for="numMedia1">Número 1:</label>
+              <input type="number" id="numMedia1" step="any" />
+            </div>
+            <div>
+              <label for="numMedia2">Número 2:</label>
+              <input type="number" id="numMedia2" step="any" />
+            </div>
+            <div>
+              <label for="numMedia3">Número 3:</label>
+              <input type="number" id="numMedia3" step="any" />
+            </div>
+            <div>
+              <label for="numMedia4">Número 4:</label>
+              <input type="number" id="numMedia4" step="any" />
+            </div>
+            <button onclick="calcularMedia()">Calcular Média</button>
+            <div class="result" id="resultMedia"></div>
+          </div>
+
+          <div class="section">
+            <h2>Par ou Ímpar</h2>
+            <div>
+              <label for="numParImpar">Número:</label>
+              <input type="number" id="numParImpar" step="1" />
+            </div>
+            <button onclick="verificarParImpar()">Verificar</button>
+            <div class="result" id="resultParImpar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function operacoesBasicas() {
+        const num1 = parseFloat(document.getElementById("num1").value);
+        const num2 = parseFloat(document.getElementById("num2").value);
+
+        if (isNaN(num1) || isNaN(num2)) {
+          document.getElementById("resultBasico").innerHTML =
+            "Por favor, insira dois números válidos.";
+          return;
+        }
+
+        const soma = num1 + num2;
+        const subtracao = num1 - num2;
+        const multiplicacao = num1 * num2;
+        const divisao = num2 !== 0 ? num1 / num2 : "Divisão por zero!";
+
+        document.getElementById("resultBasico").innerHTML = `
+                <p>${num1} + ${num2} = ${soma}</p>
+                <p>${num1} - ${num2} = ${subtracao}</p>
+                <p>${num1} * ${num2} = ${multiplicacao}</p>
+                <p>${num1} / ${num2} = ${divisao}</p>
+            `;
+      }
+
+      function calcularMultiplos() {
+        const num = parseFloat(document.getElementById("numMultiplo").value);
+
+        if (isNaN(num)) {
+          document.getElementById("resultMultiplos").innerHTML =
+            "Por favor, insira um número válido.";
+          return;
+        }
+
+        const dobro = num * 2;
+        const triplo = num * 3;
+        const quadruplo = num * 4;
+        const quintuplo = num * 5;
+        const sextuplo = num * 6;
+
+        document.getElementById("resultMultiplos").innerHTML = `
+                <p>Dobro: ${dobro}</p>
+                <p>Triplo: ${triplo}</p>
+                <p>Quádruplo: ${quadruplo}</p>
+                <p>Quíntuplo: ${quintuplo}</p>
+                <p>Sêxtuplo: ${sextuplo}</p>
+            `;
+      }
+
+      function calcularPotencias() {
+        const num = parseFloat(document.getElementById("numPotencia").value);
+
+        if (isNaN(num)) {
+          document.getElementById("resultPotencias").innerHTML =
+            "Por favor, insira um número válido.";
+          return;
+        }
+
+        const quadrado = num ** 2;
+        const cubo = num ** 3;
+        const quarta = num ** 4;
+        const quinta = num ** 5;
+        const sexta = num ** 6;
+
+        document.getElementById("resultPotencias").innerHTML = `
+                <p>Quadrado: ${quadrado}</p>
+                <p>Cubo: ${cubo}</p>
+                <p>Quarta potência: ${quarta}</p>
+                <p>Quinta potência: ${quinta}</p>
+                <p>Sexta potência: ${sexta}</p>
+            `;
+      }
+
+      function calcularRaiz() {
+        const num = parseFloat(document.getElementById("numRaiz").value);
+
+        if (isNaN(num)) {
+          document.getElementById("resultRaiz").innerHTML =
+            "Por favor, insira um número válido.";
+          return;
+        }
+
+        if (num < 0) {
+          document.getElementById("resultRaiz").innerHTML =
+            "Não existe raiz quadrada real para números negativos.";
+          return;
+        }
+
+        const raiz = Math.sqrt(num);
+        // Verifica se a raiz é um número inteiro
+        if (raiz % 1 === 0) {
+          document.getElementById(
+            "resultRaiz"
+          ).innerHTML = `Raiz quadrada de ${num} = ${raiz}`;
+        } else {
+          document.getElementById(
+            "resultRaiz"
+          ).innerHTML = `Raiz quadrada de ${num} = ${raiz.toFixed(4)}`;
+        }
+      }
+
+      function calcularBhaskara() {
+        const a = parseFloat(document.getElementById("a").value);
+        const b = parseFloat(document.getElementById("b").value);
+        const c = parseFloat(document.getElementById("c").value);
+
+        if (isNaN(a) || isNaN(b) || isNaN(c)) {
+          document.getElementById("resultBhaskara").innerHTML =
+            "Por favor, insira coeficientes válidos.";
+          return;
+        }
+
+        if (a === 0) {
+          document.getElementById("resultBhaskara").innerHTML =
+            "O coeficiente 'a' não pode ser zero.";
+          return;
+        }
+
+        const delta = b * b - 4 * a * c;
+
+        if (delta < 0) {
+          document.getElementById("resultBhaskara").innerHTML =
+            "A equação não possui raízes reais (Δ < 0).";
+          return;
+        }
+
+        const x1 = (-b + Math.sqrt(delta)) / (2 * a);
+        const x2 = (-b - Math.sqrt(delta)) / (2 * a);
+
+        if (delta === 0) {
+          document.getElementById(
+            "resultBhaskara"
+          ).innerHTML = `A equação possui uma raiz real: x = ${x1.toFixed(4)}`;
+        } else {
+          document.getElementById("resultBhaskara").innerHTML = `
+                    <p>Raízes da equação:</p>
+                    <p>x' = ${x1.toFixed(4)}</p>
+                    <p>x'' = ${x2.toFixed(4)}</p>
+                `;
+        }
+      }
+
+      function calcularMedia() {
+        const num1 = parseFloat(document.getElementById("numMedia1").value);
+        const num2 = parseFloat(document.getElementById("numMedia2").value);
+        const num3 = parseFloat(document.getElementById("numMedia3").value);
+        const num4 = parseFloat(document.getElementById("numMedia4").value);
+
+        if (isNaN(num1) || isNaN(num2) || isNaN(num3) || isNaN(num4)) {
+          document.getElementById("resultMedia").innerHTML =
+            "Por favor, insira quatro números válidos.";
+          return;
+        }
+
+        const media = (num1 + num2 + num3 + num4) / 4;
+        document.getElementById(
+          "resultMedia"
+        ).innerHTML = `Média aritmética: ${media.toFixed(2)}`;
+      }
+
+      function verificarParImpar() {
+        const num = parseInt(document.getElementById("numParImpar").value);
+
+        if (isNaN(num)) {
+          document.getElementById("resultParImpar").innerHTML =
+            "Por favor, insira um número inteiro válido.";
+          return;
+        }
+
+        const resultado = num % 2 === 0 ? "par" : "ímpar";
+        document.getElementById(
+          "resultParImpar"
+        ).innerHTML = `O número ${num} é ${resultado}.`;
+      }
+    </script>
+  </body>
+</html>
