@@ -4,68 +4,233 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sistema Integrado de Cálculos Matemáticos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+      /* Variáveis CSS para cores e estilos globais */
+      :root {
+        --primary-color: #007bff; /* Azul vibrante */
+        --primary-color-dark: #0056b3; /* Azul mais escuro para hover */
+        --secondary-color: #6c757d; /* Cinza para textos secundários/rótulos */
+        --background-light: #f8f9fa; /* Fundo muito claro */
+        --background-medium: #e9ecef; /* Fundo cinza médio */
+        --text-color: #343a40; /* Preto quase puro para textos principais */
+        --heading-color: #212529; /* Cor para títulos */
+        --border-color: #ced4da; /* Borda suave */
+        --success-bg-color: #d4edda; /* Fundo verde claro para sucesso */
+        --success-text-color: #155724; /* Texto verde escuro para sucesso */
+        --error-bg-color: #f8d7da; /* Fundo vermelho claro para erro */
+        --error-text-color: #721c24; /* Texto vermelho escuro para erro */
+        --info-bg-color: #cce5ff; /* Fundo azul claro para info */
+        --info-text-color: #004085; /* Texto azul escuro para info */
+        --font-family: 'Roboto', sans-serif;
+        --box-shadow-light: 0 4px 8px rgba(0, 0, 0, 0.08); /* Sombra mais leve */
+        --box-shadow-strong: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+        --border-radius: 8px;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
+        font-family: var(--font-family);
+        font-size: 16px;
+        max-width: 960px; /* Aumentado para melhor visualização do layout de duas colunas */
         margin: 0 auto;
         padding: 20px;
-        background-color: #f5f5f5;
+        background-color: var(--background-medium);
+        color: var(--text-color);
+        line-height: 1.6;
       }
+
       h1 {
-        color: #333;
+        color: var(--heading-color);
         text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2em; /* Título principal maior */
+        font-weight: 700;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 15px;
       }
+
       .container {
         background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 30px; /* Mais padding interno */
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow-strong); /* Sombra mais pronunciada */
       }
-      .section {
-        margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-      .section h2 {
-        margin-top: 0;
-        color: #444;
-      }
-      input[type="number"] {
-        padding: 8px;
-        width: 100px;
-        margin-right: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-      button {
-        padding: 8px 15px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-      .result {
-        margin-top: 10px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        border-radius: 4px;
-        min-height: 20px;
-      }
+
       .flex-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 25px; /* Aumentado o espaçamento entre as colunas */
       }
+
       .flex-item {
         flex: 1;
-        min-width: 250px;
+        min-width: 300px; /* Aumentado o min-width para melhor layout */
+        display: flex; /* Adicionado para empilhar as seções dentro dele */
+        flex-direction: column; /* Empilha as seções verticalmente */
+        gap: 25px; /* Espaçamento entre as seções dentro da coluna */
+      }
+
+      .section {
+        background-color: var(--background-light);
+        padding: 20px; /* Mais padding interno */
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow-light); /* Sombra sutil para cada seção */
+        flex-grow: 1; /* Garante que as seções dentro de flex-item cresçam para preencher */
+      }
+
+      .section h2 {
+        margin-top: 0;
+        margin-bottom: 15px; /* Mais espaço abaixo do título da seção */
+        color: var(--primary-color-dark); /* Cor do título da seção */
+        font-size: 1.6em; /* Título da seção maior */
+        font-weight: 700;
+        border-bottom: 1px dashed var(--border-color); /* Linha divisória sutil */
+        padding-bottom: 10px;
+      }
+
+      .section div {
+          margin-bottom: 10px; /* Espaço entre cada linha de label/input */
+      }
+
+      label {
+        display: block; /* Cada label em sua própria linha */
+        margin-bottom: 5px; /* Espaço entre o label e o input */
+        color: var(--secondary-color); /* Cor para os rótulos */
+        font-weight: 400; /* Peso normal */
+      }
+
+      input[type="number"] {
+        padding: 10px; /* Mais padding */
+        width: calc(100% - 22px); /* Ajustado para 100% menos padding e borda */
+        max-width: 200px; /* Limite a largura para não ficar muito largo */
+        margin-right: 0; /* Remove margem desnecessária */
+        border: 1px solid var(--border-color);
+        border-radius: 6px; /* Borda mais arredondada */
+        font-size: 1em;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave para focus */
+      }
+
+      input[type="number"]:focus {
+        border-color: var(--primary-color); /* Borda azul no focus */
+        outline: none; /* Remove outline padrão */
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra de foco */
+      }
+
+      button {
+        padding: 10px 20px; /* Mais padding no botão */
+        background-color: var(--primary-color); /* Usando a cor primária para consistência */
+        color: white;
+        border: none;
+        border-radius: 6px; /* Borda mais arredondada */
+        cursor: pointer;
+        margin-top: 15px; /* Mais espaço acima do botão */
+        font-size: 1.1em; /* Fonte do botão um pouco maior */
+        font-weight: 700;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: var(--box-shadow-light);
+      }
+
+      button:hover {
+        background-color: var(--primary-color-dark); /* Cor mais escura no hover */
+        transform: translateY(-2px); /* Pequeno efeito de elevação */
+        box-shadow: var(--box-shadow-strong);
+      }
+
+      button:active {
+        transform: translateY(0); /* Volta ao normal no clique */
+      }
+
+      .result {
+        margin-top: 20px; /* Mais espaço acima do resultado */
+        padding: 15px; /* Mais padding no resultado */
+        background-color: var(--info-bg-color); /* Fundo azul claro para resultados */
+        border: 1px solid var(--primary-color); /* Borda da cor principal */
+        border-radius: 6px;
+        min-height: 30px; /* Altura mínima para o box de resultado */
+        display: flex; /* Para centralizar conteúdo verticalmente */
+        align-items: center;
+        color: var(--info-text-color); /* Cor do texto do resultado */
+        font-weight: 500; /* Levemente negrito */
+        line-height: 1.5;
+        flex-direction: column; /* Para empilhar os parágrafos de resultado */
+        justify-content: center; /* Centraliza o conteúdo horizontalmente */
+        text-align: center; /* Alinha o texto dentro do div.result */
+      }
+
+      /* Estilos para os parágrafos dentro de .result */
+      .result p {
+          margin: 5px 0; /* Espaço entre os parágrafos de resultado, se houver múltiplos */
+          padding: 0;
+          line-height: 1.4; 
+          width: 100%; /* Garante que os parágrafos ocupem a largura total do resultado box */
+          text-align: left; /* Alinha o texto de cada parágrafo à esquerda */
+      }
+
+      /* Estilo para o valor calculado final (para resultados de linha única ou valores específicos) */
+      .result .final-calculated-value {
+          font-weight: 700; /* Negrito mais forte */
+          color: var(--success-text-color); /* Cor verde para destaque de sucesso */
+          font-size: 1.3em; /* Um pouco maior para o valor final */
+          margin-left: 8px; /* Um pequeno espaço entre o rótulo e o valor */
+      }
+
+      /* Para o texto "Divisão por zero!" ou similares (erro específico) */
+      .result .error-value {
+          color: var(--error-text-color); /* Usa a cor de texto de erro para este valor específico */
+          font-weight: 700;
+          font-size: 1.1em; /* Destaca a mensagem de erro específica */
+      }
+      
+      /* Estilos para mensagens de erro/sucesso dentro do .result */
+      .result.error-message {
+          background-color: var(--error-bg-color);
+          border-color: var(--error-text-color);
+          color: var(--error-text-color);
+          font-weight: 700;
+      }
+
+      .result.success-message {
+          background-color: var(--success-bg-color);
+          border-color: var(--success-text-color);
+          color: var(--success-text-color);
+          font-weight: 700;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+
+        h1 {
+          font-size: 1.8em;
+          margin-bottom: 20px;
+        }
+
+        .container {
+          padding: 20px;
+        }
+
+        .flex-container {
+          flex-direction: column; /* Colunas empilham em telas menores */
+          gap: 20px;
+        }
+
+        .flex-item {
+          min-width: unset; /* Remove o min-width */
+          width: 100%; /* Ocupa a largura total */
+          gap: 20px; /* Mantém o espaçamento entre as seções */
+        }
+
+        .section h2 {
+          font-size: 1.4em;
+        }
+
+        input[type="number"] {
+          max-width: 100%; /* Inputs ocupam largura total */
+          width: calc(100% - 20px); /* Ajustado para 100% menos padding */
+        }
       }
     </style>
   </head>
@@ -175,35 +340,44 @@
     </div>
 
     <script>
+      // Função auxiliar para exibir resultados com cores de feedback
+      function displayResult(elementId, message, type = 'info') {
+        const resultDiv = document.getElementById(elementId);
+        resultDiv.innerHTML = message;
+        // Limpa classes de feedback anteriores
+        resultDiv.classList.remove('error-message', 'success-message', 'info-message'); 
+        // Adiciona a classe de feedback correta
+        resultDiv.classList.add(`${type}-message`);
+      }
+
       function operacoesBasicas() {
         const num1 = parseFloat(document.getElementById("num1").value);
         const num2 = parseFloat(document.getElementById("num2").value);
 
         if (isNaN(num1) || isNaN(num2)) {
-          document.getElementById("resultBasico").innerHTML =
-            "Por favor, insira dois números válidos.";
+          displayResult("resultBasico", "Por favor, insira dois números válidos.", 'error');
           return;
         }
 
         const soma = num1 + num2;
         const subtracao = num1 - num2;
         const multiplicacao = num1 * num2;
-        const divisao = num2 !== 0 ? num1 / num2 : "Divisão por zero!";
+        const divisao = num2 !== 0 ? (num1 / num2).toFixed(4) : "<span class=\"error-value\">Divisão por zero!</span>"; // Usando toFixed para Divisão
 
-        document.getElementById("resultBasico").innerHTML = `
-                <p>${num1} + ${num2} = ${soma}</p>
-                <p>${num1} - ${num2} = ${subtracao}</p>
-                <p>${num1} * ${num2} = ${multiplicacao}</p>
-                <p>${num1} / ${num2} = ${divisao}</p>
-            `;
+        const resultHtml = `
+            <p><strong>Soma:</strong> ${num1} + ${num2} = <span class="final-calculated-value">${soma}</span></p>
+            <p><strong>Subtração:</strong> ${num1} - ${num2} = <span class="final-calculated-value">${subtracao}</span></p>
+            <p><strong>Multiplicação:</strong> ${num1} * ${num2} = <span class="final-calculated-value">${multiplicacao}</span></p>
+            <p><strong>Divisão:</strong> ${num1} / ${num2} = <span class="final-calculated-value">${divisao}</span></p>
+        `;
+        displayResult("resultBasico", resultHtml, 'success');
       }
 
       function calcularMultiplos() {
         const num = parseFloat(document.getElementById("numMultiplo").value);
 
         if (isNaN(num)) {
-          document.getElementById("resultMultiplos").innerHTML =
-            "Por favor, insira um número válido.";
+          displayResult("resultMultiplos", "Por favor, insira um número válido.", 'error');
           return;
         }
 
@@ -213,21 +387,21 @@
         const quintuplo = num * 5;
         const sextuplo = num * 6;
 
-        document.getElementById("resultMultiplos").innerHTML = `
-                <p>Dobro: ${dobro}</p>
-                <p>Triplo: ${triplo}</p>
-                <p>Quádruplo: ${quadruplo}</p>
-                <p>Quíntuplo: ${quintuplo}</p>
-                <p>Sêxtuplo: ${sextuplo}</p>
-            `;
+        const resultHtml = `
+            <p><strong>Dobro de ${num}:</strong> <span class="final-calculated-value">${dobro}</span></p>
+            <p><strong>Triplo de ${num}:</strong> <span class="final-calculated-value">${triplo}</span></p>
+            <p><strong>Quádruplo de ${num}:</strong> <span class="final-calculated-value">${quadruplo}</span></p>
+            <p><strong>Quíntuplo de ${num}:</strong> <span class="final-calculated-value">${quintuplo}</span></p>
+            <p><strong>Sêxtuplo de ${num}:</strong> <span class="final-calculated-value">${sextuplo}</span></p>
+        `;
+        displayResult("resultMultiplos", resultHtml, 'success');
       }
 
       function calcularPotencias() {
         const num = parseFloat(document.getElementById("numPotencia").value);
 
         if (isNaN(num)) {
-          document.getElementById("resultPotencias").innerHTML =
-            "Por favor, insira um número válido.";
+          displayResult("resultPotencias", "Por favor, insira um número válido.", 'error');
           return;
         }
 
@@ -237,41 +411,33 @@
         const quinta = num ** 5;
         const sexta = num ** 6;
 
-        document.getElementById("resultPotencias").innerHTML = `
-                <p>Quadrado: ${quadrado}</p>
-                <p>Cubo: ${cubo}</p>
-                <p>Quarta potência: ${quarta}</p>
-                <p>Quinta potência: ${quinta}</p>
-                <p>Sexta potência: ${sexta}</p>
-            `;
+        const resultHtml = `
+            <p><strong>Quadrado (${num}²):</strong> <span class="final-calculated-value">${quadrado}</span></p>
+            <p><strong>Cubo (${num}³):</strong> <span class="final-calculated-value">${cubo}</span></p>
+            <p><strong>Quarta potência (${num}⁴):</strong> <span class="final-calculated-value">${quarta}</span></p>
+            <p><strong>Quinta potência (${num}⁵):</strong> <span class="final-calculated-value">${quinta}</span></p>
+            <p><strong>Sexta potência (${num}⁶):</strong> <span class="final-calculated-value">${sexta}</span></p>
+        `;
+        displayResult("resultPotencias", resultHtml, 'success');
       }
 
       function calcularRaiz() {
         const num = parseFloat(document.getElementById("numRaiz").value);
 
         if (isNaN(num)) {
-          document.getElementById("resultRaiz").innerHTML =
-            "Por favor, insira um número válido.";
+          displayResult("resultRaiz", "Por favor, insira um número válido.", 'error');
           return;
         }
 
         if (num < 0) {
-          document.getElementById("resultRaiz").innerHTML =
-            "Não existe raiz quadrada real para números negativos.";
+          displayResult("resultRaiz", "Não existe raiz quadrada real para números negativos.", 'error');
           return;
         }
 
         const raiz = Math.sqrt(num);
-        // Verifica se a raiz é um número inteiro
-        if (raiz % 1 === 0) {
-          document.getElementById(
-            "resultRaiz"
-          ).innerHTML = `Raiz quadrada de ${num} = ${raiz}`;
-        } else {
-          document.getElementById(
-            "resultRaiz"
-          ).innerHTML = `Raiz quadrada de ${num} = ${raiz.toFixed(4)}`;
-        }
+        // Ajustado para um formato mais limpo, usando toFixed para decimais
+        const resultText = `Raiz quadrada de ${num} = <span class="final-calculated-value">${raiz % 1 === 0 ? raiz : raiz.toFixed(4)}</span>`;
+        displayResult("resultRaiz", resultText, 'success');
       }
 
       function calcularBhaskara() {
@@ -280,22 +446,19 @@
         const c = parseFloat(document.getElementById("c").value);
 
         if (isNaN(a) || isNaN(b) || isNaN(c)) {
-          document.getElementById("resultBhaskara").innerHTML =
-            "Por favor, insira coeficientes válidos.";
+          displayResult("resultBhaskara", "Por favor, insira coeficientes válidos.", 'error');
           return;
         }
 
         if (a === 0) {
-          document.getElementById("resultBhaskara").innerHTML =
-            "O coeficiente 'a' não pode ser zero.";
+          displayResult("resultBhaskara", "O coeficiente 'a' não pode ser zero.", 'error');
           return;
         }
 
         const delta = b * b - 4 * a * c;
 
         if (delta < 0) {
-          document.getElementById("resultBhaskara").innerHTML =
-            "A equação não possui raízes reais (Δ < 0).";
+          displayResult("resultBhaskara", "A equação não possui raízes reais (Δ < 0).", 'error');
           return;
         }
 
@@ -303,15 +466,14 @@
         const x2 = (-b - Math.sqrt(delta)) / (2 * a);
 
         if (delta === 0) {
-          document.getElementById(
-            "resultBhaskara"
-          ).innerHTML = `A equação possui uma raiz real: x = ${x1.toFixed(4)}`;
+          displayResult("resultBhaskara", `A equação possui uma raiz real: x = <span class="final-calculated-value">${x1.toFixed(4)}</span>`, 'success');
         } else {
-          document.getElementById("resultBhaskara").innerHTML = `
-                    <p>Raízes da equação:</p>
-                    <p>x' = ${x1.toFixed(4)}</p>
-                    <p>x'' = ${x2.toFixed(4)}</p>
-                `;
+          const resultHtml = `
+            <p><strong>Raízes da equação:</strong></p>
+            <p>x' = <span class="final-calculated-value">${x1.toFixed(4)}</span></p>
+            <p>x'' = <span class="final-calculated-value">${x2.toFixed(4)}</span></p>
+          `;
+          displayResult("resultBhaskara", resultHtml, 'success');
         }
       }
 
@@ -322,30 +484,25 @@
         const num4 = parseFloat(document.getElementById("numMedia4").value);
 
         if (isNaN(num1) || isNaN(num2) || isNaN(num3) || isNaN(num4)) {
-          document.getElementById("resultMedia").innerHTML =
-            "Por favor, insira quatro números válidos.";
+          displayResult("resultMedia", "Por favor, insira quatro números válidos.", 'error');
           return;
         }
 
         const media = (num1 + num2 + num3 + num4) / 4;
-        document.getElementById(
-          "resultMedia"
-        ).innerHTML = `Média aritmética: ${media.toFixed(2)}`;
+        displayResult("resultMedia", `Média aritmética: <span class="final-calculated-value">${media.toFixed(2)}</span>`, 'success');
       }
 
       function verificarParImpar() {
         const num = parseInt(document.getElementById("numParImpar").value);
 
         if (isNaN(num)) {
-          document.getElementById("resultParImpar").innerHTML =
-            "Por favor, insira um número inteiro válido.";
+          displayResult("resultParImpar", "Por favor, insira um número inteiro válido.", 'error');
           return;
         }
 
         const resultado = num % 2 === 0 ? "par" : "ímpar";
-        document.getElementById(
-          "resultParImpar"
-        ).innerHTML = `O número ${num} é ${resultado}.`;
+        // Ajustado para formatar a string de forma mais direta e usar a classe para o resultado
+        displayResult("resultParImpar", `O número ${num} é <span class="final-calculated-value">${resultado}</span>.`, 'success');
       }
     </script>
   </body>
